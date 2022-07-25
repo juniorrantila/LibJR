@@ -1,6 +1,7 @@
 #pragma once
 #include <JR/Error.h>
 #include <JR/Maybe.h>
+#include <stdio.h>
 #include <variant>
 
 template<typename T>
@@ -82,3 +83,20 @@ private:
     Error m_error {};
     bool m_is_error { false };
 };
+
+template <typename T>
+T notify_if_error(ErrorOr<T> result)
+{
+    if (!result.is_error())
+        return result.release_value();
+    auto error = result.release_error();
+    auto function_name = error.function_name();
+    auto message = error.message();
+    auto filename = error.filename();
+    fprintf(stderr, "Notice: %*s: %*s [%*s:%d]\n",
+            function_name.size(), function_name.data(),
+            message.size(), message.data(),
+            filename.size(), filename.data(),
+            error.line_in_file());
+    return T();
+}
