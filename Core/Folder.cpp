@@ -21,7 +21,7 @@ ErrorOr<Folder> Folder::open(StringView path)
     let file_info = TRY(Core::System::fstat(fd));
     if (!file_info.is_folder())
         return Error::from_string_literal("file is not a folder");
-    close_fd.let_down_guard();
+    close_fd.disarm();
     
     var dir = fdopendir(fd);
     if (!dir)
@@ -40,7 +40,7 @@ ErrorOr<Folder> Folder::open_relative_to(Folder const& root_folder,
     let file_info = TRY(Core::System::fstat(fd));
     if (!file_info.is_folder())
         return Error::from_string_literal("file is not a folder");
-    close_fd.let_down_guard();
+    close_fd.disarm();
 
     var dir = fdopendir(fd);
     if (!dir)

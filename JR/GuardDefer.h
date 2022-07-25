@@ -14,7 +14,7 @@ public:
             m_lambda();
     }
 
-    constexpr void let_down_guard()
+    constexpr void disarm()
     {
         m_guard = false;
     }
