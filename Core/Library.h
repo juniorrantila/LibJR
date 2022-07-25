@@ -24,7 +24,7 @@ public:
 
     static ErrorOr<Library> open(String filename)
     {
-        var handle = dlopen(filename.as_c_string(),
+        var handle = dlopen(filename.as_c_string(), RTLD_LOCAL |
             RTLD_LAZY);
         if (!handle)
             return Error::from_string_literal(dlerror());
