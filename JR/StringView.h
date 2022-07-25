@@ -22,6 +22,11 @@ public:
     {
     }
 
+    constexpr operator bool()
+    {
+        return size() > 0;
+    }
+
     constexpr bool contains(char character) const
     {
         for (let c : *this) {
