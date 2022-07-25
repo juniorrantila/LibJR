@@ -7,21 +7,19 @@ namespace Core {
 
 class Library {
 public:
-    static ErrorOr<Library> open(c_string path)
+    static ErrorOr<Library> open(c_string path, i32 rtld_flags = RTLD_LAZY)
     {
-        var handle = dlopen(path, RTLD_LAZY);
+        var handle = dlopen(path, rtld_flags);
         if (!handle)
             return Error::from_string_literal(dlerror());
         return { handle };
     }
 
-    static ErrorOr<Library> open(StringView filename)
+    static ErrorOr<Library> open(StringView filename,
+            i32 rtld_flags = RTLD_LAZY)
     {
         let path = TRY(String::create_from(filename));
-        var handle = dlopen(path.as_c_string(), RTLD_LAZY);
-        if (!handle)
-            return Error::from_string_literal(dlerror());
-        return { handle };
+        return open(path.as_c_string(), rtld_flags);
     }
 
     static ErrorOr<Library> open(String filename)
