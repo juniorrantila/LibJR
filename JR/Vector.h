@@ -32,6 +32,11 @@ public:
         return vec;
     }
 
+    constexpr void clear()
+    {
+        m_size = 0;
+    }
+
     // Vector(ConcurrentVector<T>&& vector);
 
     T const* begin() const { return m_data; }
