@@ -9,7 +9,7 @@ class [[nodiscard]] ErrorOr {
 public:
     ErrorOr() = delete;
     
-    constexpr ErrorOr(T&& value)
+    constexpr ErrorOr(T value)
         : m_error_or_value(std::move(value))
         , m_is_error(false)
     {
