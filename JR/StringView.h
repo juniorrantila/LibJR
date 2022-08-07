@@ -59,6 +59,11 @@ public:
         return StringView(other) == *this;
     }
 
+    constexpr char operator[](u32 index) const
+    {
+        return m_data[index];
+    }
+
     ErrorOr<SingleSplit> split_on_first(char character) const;
 
     constexpr StringView split_view(u32 start, u32 end) const
