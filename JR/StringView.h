@@ -37,6 +37,13 @@ public:
         return false;
     }
 
+    constexpr bool starts_with(StringView value) const
+    {
+        if (m_size < value.size())
+            return false;
+        return shrink(value.size()) == value;
+    }
+
     constexpr bool ends_with(StringView value) const
     {
         i64 starting_index = (i64)m_size - (i64)value.m_size;
