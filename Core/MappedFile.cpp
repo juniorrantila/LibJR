@@ -55,4 +55,18 @@ ErrorOr<MappedFile> MappedFile::open_relative_to(
     };
 }
 
+Maybe<StringView> MappedFile::read_line()
+{
+    if (eof())
+        return {};
+    let start = m_cursor;
+    u32 end = start;
+    for (; end < m_size; end++) {
+        if (m_data[end] == '\n')
+            break;
+    }
+    m_cursor = end + 1;
+    return StringView(&m_data[start], end-start);
+}
+
 }

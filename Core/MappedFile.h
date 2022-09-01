@@ -2,6 +2,7 @@
 #include <Core/Forward.h>
 #include <JR/ErrorOr.h>
 #include <JR/StringView.h>
+#include <JR/Maybe.h>
 
 namespace Core {
 
@@ -14,6 +15,7 @@ public:
 
     StringView view() const { return { m_data, m_size }; }
     StringView filename() const { return m_filename; }
+    Maybe<StringView> read_line();
 
     MappedFile(MappedFile&& other)
         : m_filename(other.filename())
@@ -53,6 +55,7 @@ private:
     StringView m_filename {};
     c_string m_data { nullptr };
     u32 m_size { 0 };
+    u32 m_cursor { 0 };
 };
 
 }
