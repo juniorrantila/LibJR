@@ -3,6 +3,7 @@
 #include <JR/Forward.h>
 #include <JR/Keywords.h>
 #include <JR/Types.h>
+#include <JR/Maybe.h>
 
 struct SingleSplit;
 
@@ -14,7 +15,7 @@ public:
     {
     }
 
-    constexpr StringView() { }
+    constexpr StringView() = default;
 
     constexpr StringView(c_string data)
         : m_data(data)
@@ -64,11 +65,25 @@ public:
         return m_data[index];
     }
 
+    constexpr Maybe<u32> find_first_occurrence_of(char character) const
+    {
+        for (u32 index = 0; index < m_size; index++) {
+            if (m_data[index] == character)
+                return index;
+        }
+        return {};
+    }
+
     ErrorOr<SingleSplit> split_on_first(char character) const;
 
     constexpr StringView split_view(u32 start, u32 end) const
     {
         return { &m_data[start], end - start };
+    }
+
+    constexpr StringView shrink(u32 end) const
+    {
+        return { m_data, end };
     }
 
     constexpr char const* data() const { return m_data; }
