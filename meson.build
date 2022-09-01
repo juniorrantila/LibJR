@@ -33,6 +33,16 @@ libJR_dep = declare_dependency(
   link_with: libJR_lib,
   include_directories: '.')
 
+libMain_lib = static_library('Main', [
+    'Main/Main.cpp'
+  ],
+  include_directories: ['.'],
+  dependencies: libJR_dep)
+
+libMain_dep = declare_dependency(
+  link_with: libMain_lib,
+  include_directories: '.')
+
 libCore_lib = library('Core', [
       'Core/Folder.cpp',
       'Core/MappedFile.cpp',
