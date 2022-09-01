@@ -23,7 +23,7 @@ ErrorOr<SingleSplit> StringView::split_on_first(char character) const
     for (u32 i = 0; i < size(); i++) {
         if (m_data[i] == character) {
             var first = split_view(0, i);
-            var other = split_view(i, size());
+            var other = split_view(i+1, size());
             return SingleSplit { first, other };
         }
     }
