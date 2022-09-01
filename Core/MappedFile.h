@@ -32,6 +32,8 @@ public:
         return m_data != nullptr;
     }
 
+    constexpr bool eof() const { return m_cursor == m_size; }
+
 private:
     MappedFile(StringView filename, c_string data, u32 size)
         : m_filename(filename)
